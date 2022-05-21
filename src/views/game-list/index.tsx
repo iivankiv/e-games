@@ -13,7 +13,9 @@ const games = [
 const GameList = () => {
   return (
     <div className="Game-list-container">
-      <img src={logo} className="Main-logo" alt="logo" />
+      <div style={{ textAlign: 'center' }}>
+        <img src={logo} className="Main-logo" alt="logo" />
+      </div>
 
       <div className="Game-list">
         {games.map((game) => (
