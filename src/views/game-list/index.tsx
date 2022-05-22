@@ -17,7 +17,7 @@ const GameList = () => {
 
       <div className="grid gap-4 grid-cols-3 p-4">
         {games.map((game) => (
-          <Link className="p-4 bg-slate-200 text-center" to={game.path}>
+          <Link key={game.title} className="p-4 bg-slate-200 text-center" to={game.path}>
             {game.title}
           </Link>
         ))}

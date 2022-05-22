@@ -1,12 +1,25 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 
-const GridExamples = () => {
-  return (
-    <div className="container mx-auto bg-gray-200 rounded-xl shadow border p-8 m-10">
-      <p className="text-3xl text-gray-700 font-bold mb-5">Welcome!</p>
-      <p className="text-gray-500 text-lg">React and Tailwind CSS in action</p>
-    </div>
-  );
+import { plan, legend } from './utils/world.constant';
+import { World } from './models/world.model';
+
+const WorldOfElements = () => {
+  const [worldMap, setWorldMap] = useState('');
+
+  useEffect(() => {
+    handleWorldTurn();
+  }, []);
+
+  const handleWorldTurn = async () => {
+    const world = new World(plan, legend);
+
+    for (let i = 0; i < 2; i++) {
+      world.turn();
+      setWorldMap(world.toString());
+    }
+  };
+
+  return <div className="container mx-auto bg-gray-200 rounded-xl shadow border p-8 m-10">{worldMap}</div>;
 };
 
-export default GridExamples;
+export default WorldOfElements;
