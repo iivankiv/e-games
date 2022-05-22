@@ -1,7 +1,7 @@
 import React from 'react';
 
-import logo from '../../logo.svg';
 import './game-list.css';
+import logo from '../../logo.svg';
 import { Link } from 'react-router-dom';
 
 const games = [
@@ -12,16 +12,14 @@ const games = [
 
 const GameList = () => {
   return (
-    <div className="Game-list-container">
-      <div style={{ textAlign: 'center' }}>
-        <img src={logo} className="Main-logo" alt="logo" />
-      </div>
+    <div className="flex flex-col justify-center">
+      <img src={logo} className="Main-logo w-64 my-4 mx-auto" alt="logo" />
 
-      <div className="Game-list">
+      <div className="grid gap-4 grid-cols-3 p-4">
         {games.map((game) => (
-          <div className="Game-link">
-            <Link to={game.path}>{game.title}</Link>
-          </div>
+          <Link className="p-4 bg-slate-200 text-center" to={game.path}>
+            {game.title}
+          </Link>
         ))}
       </div>
     </div>
