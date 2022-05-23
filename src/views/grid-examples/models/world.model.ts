@@ -1,7 +1,7 @@
-import { charFromElement, elementFromChar } from '../utils/world.util';
+import { charFromElement, checkDestination, elementFromChar } from '../utils/world.util';
 import { directions } from '../utils/world.constant';
 import { Grid } from './grid.model';
-import { ICreatures, LegendEnum } from '../utils/world.type';
+import { IAction, ICreatures, LegendEnum } from '../utils/world.type';
 import { IVector, Vector } from './vector.model';
 import { View } from './view.model';
 
@@ -45,18 +45,11 @@ export class World {
   letAct(critter: any, vector: IVector) {
     const action = critter.act(new View(this, vector));
     if (action && action.type === 'move') {
-      const dest = this.checkDestination(action, vector);
+      const dest = checkDestination(action, vector, this.grid);
       if (dest && this.grid.get(dest) == null) {
         this.grid.set(vector, null);
         this.grid.set(dest, critter);
       }
-    }
-  }
-
-  checkDestination(action: any, vector: IVector) {
-    if (directions.hasOwnProperty(action.direction)) {
-      const dest = vector.plus(directions[action.direction]);
-      if (this.grid.isInside(dest)) return dest;
     }
   }
 }
