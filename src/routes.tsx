@@ -11,7 +11,7 @@ export const routes = [
     children: [
       { index: true, element: <GameList /> },
       { path: RoutesEnum.WORLD_OF_CREATURES, element: <WorldOfCreatures /> },
-      { path: 'crawler', element: <Crawler /> },
+      { path: RoutesEnum.CRAWLER, element: <Crawler /> },
     ],
   },
 ];
