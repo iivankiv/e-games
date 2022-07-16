@@ -1,26 +1,21 @@
 import React from 'react';
 
-import './game-list.css';
-import logo from '../../logo.svg';
-import { Link } from 'react-router-dom';
 import { RoutesEnum } from '../../enums/routes.enum';
+import { HomeGameCard } from '../../components';
 
 const games = [
-  { path: RoutesEnum.WORLD_OF_CREATURES, title: 'Game 1' },
-  { path: '/world-of-creatures', title: 'Game 2' },
-  { path: '/world-of-creatures', title: 'Game 3' },
+  { path: RoutesEnum.WORLD_OF_CREATURES, title: 'World of Creatures' },
+  { path: RoutesEnum.CRAWLER, title: 'Crawler' },
 ];
 
 export default function GameList() {
   return (
     <div className="flex flex-col justify-center">
-      <img src={logo} className="Main-logo w-64 my-4 mx-auto" alt="logo" />
+      <img src="images/forest-game.jpg" className="h-96 object-cover w-full mx-auto" alt="logo" />
 
-      <div className="grid gap-4 grid-cols-3 p-4">
-        {games.map((game) => (
-          <Link key={game.title} className="p-4 bg-slate-200 text-center" to={game.path}>
-            {game.title}
-          </Link>
+      <div className="grid gap-4 grid-cols-4 p-4">
+        {games.map(({ path, title }) => (
+          <HomeGameCard key={title} path={path} title={title} />
         ))}
       </div>
     </div>
