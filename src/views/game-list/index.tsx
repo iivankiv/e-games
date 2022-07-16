@@ -3,14 +3,15 @@ import React from 'react';
 import './game-list.css';
 import logo from '../../logo.svg';
 import { Link } from 'react-router-dom';
+import { RoutesEnum } from '../../enums/routes.enum';
 
 const games = [
-  { path: 'game1', title: 'Game 1' },
-  { path: 'game1', title: 'Game 2' },
-  { path: 'game1', title: 'Game 3' },
+  { path: RoutesEnum.WORLD_OF_CREATURES, title: 'Game 1' },
+  { path: '/world-of-creatures', title: 'Game 2' },
+  { path: '/world-of-creatures', title: 'Game 3' },
 ];
 
-const GameList = () => {
+export default function GameList() {
   return (
     <div className="flex flex-col justify-center">
       <img src={logo} className="Main-logo w-64 my-4 mx-auto" alt="logo" />
@@ -24,6 +25,4 @@ const GameList = () => {
       </div>
     </div>
   );
-};
-
-export default GameList;
+}
