@@ -28,7 +28,7 @@ function reducer(state: State, { type, data }: Action) {
     case 'select':
       return {
         ...state,
-        visible: !visible.length && data?.card ? [data?.card] : [],
+        visible: data?.card ? [...visible, data?.card] : visible,
         matched: visible[0]?.value === data?.card?.value ? matched.add(data.card?.value) : matched,
       };
     case 'hide':
@@ -55,13 +55,13 @@ function Mediator({ level = 4 }: Props) {
   );
 
   const handleSelect = (card: TCard) => {
-    dispatch({ type: 'select', data: { card } });
-
-    if (state.visible.length > 1) {
+    if (state.visible.length) {
       setTimeout(() => {
         dispatch({ type: 'hide' });
-      }, 2000);
+      }, 1000);
     }
+
+    dispatch({ type: 'select', data: { card } });
   };
 
   return (

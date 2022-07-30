@@ -9,6 +9,7 @@ type Props = {
 
 function Card({ matched, visible, card, onSelect }: Props) {
   const bg = visible ? 'bg-blue-500' : matched ? 'bg-blue-300' : 'bg-blue-900';
+  const textColor = matched ? 'text-blue-900' : 'text-white';
 
   return (
     <div
@@ -17,7 +18,7 @@ function Card({ matched, visible, card, onSelect }: Props) {
         matched ? 'pointer-events-none' : ''
       } flex items-center justify-center h-48 max-w-sm ${bg} rounded-lg hover:bg-blue-700 cursor-pointer border border-gray-200 shadow-md dark:bg-gray-800 dark:border-gray-700`}
     >
-      <span className="text-white text-3xl">{card.value}</span>
+      <span className={`${textColor} text-3xl`}>{matched || visible ? card.value : ''}</span>
     </div>
   );
 }
