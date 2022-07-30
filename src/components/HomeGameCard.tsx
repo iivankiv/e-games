@@ -1,10 +1,11 @@
 import { Link } from 'react-router-dom';
-
-type Props = {
+export interface GameCard {
   path: string;
   title: string;
   description?: string;
 };
+
+type Props = GameCard;
 
 const HomeGameCard = ({
   path,
