@@ -1,4 +1,5 @@
 import { useMemo, useReducer } from 'react';
+import { Button } from '../../components';
 import Card, { TCard } from './card';
 
 function getItems(level: number) {
@@ -8,7 +9,7 @@ function getItems(level: number) {
 }
 
 type Action = {
-  type: 'select' | 'hide';
+  type: 'init' | 'select' | 'hide';
   data?: {
     card: TCard;
   };
@@ -33,6 +34,8 @@ function reducer(state: State, { type, data }: Action) {
       };
     case 'hide':
       return { ...state, visible: [] };
+    case 'init':
+      return {...initialState, matched: new Set<string>()};
     default:
       throw new Error();
   }
@@ -64,18 +67,25 @@ function Mediator({ level = 4 }: Props) {
     dispatch({ type: 'select', data: { card } });
   };
 
+  const handleReset = () => {
+    dispatch({ type: 'init' });
+  };
+
   return (
-    <div className={`grid grid-cols-${level} gap-4 bg-blue-100 p-4 rounded-xl`}>
-      {items.map((item) => {
-        return (
+    <div>
+      <div className="flex justify-end mb-4">
+        <Button title="Reset" onClick={handleReset} />
+      </div>
+      <div className={`grid grid-cols-${level} gap-4 bg-blue-100 p-4 rounded-xl`}>
+        {items.map((item) => (
           <Card
             matched={state.matched.has(item.value)}
             visible={state.visible.some((v) => v.value === item.value && v.index === item.index)}
             card={item}
             onSelect={handleSelect}
           />
-        );
-      })}
+        ))}
+      </div>
     </div>
   );
 }
