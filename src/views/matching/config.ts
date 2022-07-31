@@ -1,4 +1,5 @@
-export const DELAY = 500;
+export const DELAY_OPENED = 400;
+export const GAME_SECONDS = 60;
 
 export const THEME = {
   blue: {
