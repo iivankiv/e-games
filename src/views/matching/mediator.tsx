@@ -1,4 +1,5 @@
-import { Button, ResetIcon, StartIcon, Timer } from '../../components';
+import { Button, ExpandIcon, ResetIcon, StartIcon, Timer } from '../../components';
+import useFullScreen from '../../hooks/useFullScreen';
 import Card from './card';
 import { GAME_SECONDS } from './config';
 import useGameData from './useGameData';
@@ -9,6 +10,7 @@ type Props = {
 
 function Mediator({ level = 4 }: Props) {
   const { items, state, handleReset, handleStart, handleSelect, handleFinish } = useGameData();
+  const { toggleFullScreen } = useFullScreen();
 
   return (
     <div>
@@ -17,6 +19,7 @@ function Mediator({ level = 4 }: Props) {
         <span className="flex items-center font-medium text-2xl">{`${state.steps} ходів`}</span>
         <Button title="Обнулити" onClick={handleReset} headIcon={<ResetIcon />} />
         <Button title="Почати" onClick={handleStart} headIcon={<StartIcon />} />
+        <Button title="Повний екран" onClick={toggleFullScreen} headIcon={<ExpandIcon />} />
       </div>
       <div
         className={`grid grid-cols-${level} gap-8 bg-blue-100 p-8 rounded-xl ${
