@@ -9,7 +9,7 @@ function getItems(level: number) {
 }
 
 type Action = {
-  type: 'init' | 'select' | 'hide';
+  type: 'init' | 'select' | 'hide' | 'update';
   data?: {
     card: TCard;
   };
@@ -18,24 +18,27 @@ type Action = {
 type State = {
   matched: Set<string>;
   visible: TCard[];
+  animated: Set<string>;
 };
 
-const initialState = { visible: [], matched: new Set<string>() };
+const initialState = { visible: [], matched: new Set<string>(), animated: new Set<string>() };
 
 function reducer(state: State, { type, data }: Action) {
-  const { visible, matched } = state;
+  const { visible, matched, animated } = state;
 
   switch (type) {
     case 'select':
       return {
         ...state,
         visible: data?.card ? [...visible, data?.card] : visible,
-        matched: visible[0]?.value === data?.card?.value ? matched.add(data.card?.value) : matched,
+        animated: visible[0]?.value === data?.card?.value ? animated.add(data.card?.value) : animated,
       };
     case 'hide':
       return { ...state, visible: [] };
+    case 'update':
+      return { ...state, matched: matched.add(data?.card?.value || ''), animated: new Set<string>() };
     case 'init':
-      return {...initialState, matched: new Set<string>()};
+      return { ...initialState, matched: new Set<string>() };
     default:
       throw new Error();
   }
@@ -61,7 +64,11 @@ function Mediator({ level = 4 }: Props) {
     if (state.visible.length) {
       setTimeout(() => {
         dispatch({ type: 'hide' });
-      }, 1000);
+
+        if (state.visible[0]?.value === card?.value) {
+          dispatch({ type: 'update', data: { card } });
+        }
+      }, 500);
     }
 
     dispatch({ type: 'select', data: { card } });
@@ -76,10 +83,11 @@ function Mediator({ level = 4 }: Props) {
       <div className="flex justify-end mb-4">
         <Button title="Reset" onClick={handleReset} />
       </div>
-      <div className={`grid grid-cols-${level} gap-4 bg-blue-100 p-4 rounded-xl`}>
+      <div className={`grid grid-cols-${level} gap-8 bg-blue-100 p-8 rounded-xl`}>
         {items.map((item) => (
           <Card
             matched={state.matched.has(item.value)}
+            animated={state.animated.has(item.value)}
             visible={state.visible.some((v) => v.value === item.value && v.index === item.index)}
             card={item}
             onSelect={handleSelect}
