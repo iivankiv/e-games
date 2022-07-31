@@ -4,15 +4,22 @@ type Props = {
   start: boolean;
   initSeconds: number;
   pause: boolean;
+  onFinish(): void;
 };
 
-const Timer = ({ start, pause, initSeconds }: Props) => {
+const Timer = ({ start, pause, initSeconds, onFinish }: Props) => {
   const [seconds, setSeconds] = useState<number>(0);
   const [timer, setTimer] = useState<any>(null);
 
   useEffect(() => {
     setSeconds(initSeconds);
   }, [initSeconds]);
+
+  useEffect(() => {
+    if (seconds < 1) {
+      onFinish();
+    }
+  }, [seconds, onFinish]);
 
   useEffect(() => {
     if (timer && pause) {
